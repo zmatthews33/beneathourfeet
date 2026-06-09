@@ -99,7 +99,7 @@
 		<script type="text/javascript" src="../js/jquery.cassette.js"></script>
 		<script type="text/javascript">
 			$(function() {
-				$('#vc-container').cassette();
+				$('#vc-container').cassette({ songsPath: '../songs/', soundsPath: '../sounds/' });
 
 				$(document).on('click', '.track-listing a', function(e) {
 					e.preventDefault();

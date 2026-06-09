@@ -31,7 +31,7 @@
 	};
 
 	$.Cassette.defaults = {
-		// song names. Assumes the path of each song is songs/name.filetype
+		// song names. Assumes the path of each song is songsPath/name.filetype
 		songs: [
 			'gottagettoyou',
 			'beneathourfeet',
@@ -43,6 +43,8 @@
 			'lasombra',
 			'HumanRace'
 		],
+		songsPath: 'songs/',
+		soundsPath: 'sounds/',
 		fallbackMessage: 'HTML5 audio not supported',
 		// initial sound volume
 		initialVolume: 0.7
@@ -76,7 +78,7 @@
 
 				// create player
 				_self._createPlayer();
-				_self.sound = new $.Sound();
+				_self.sound = new $.Sound(_self.options.soundsPath);
 				// load events
 				_self._loadEvents();
 			});
@@ -101,7 +103,7 @@
 
 			return $.Deferred(function(dfd) {
 				for (var i = 0, len = _self.options.songs.length; i < len; ++i) {
-					var song = new $.Song(_self.options.songs[i], i);
+					var song = new $.Song(_self.options.songs[i], i, _self.options.songsPath);
 
 					$.when(song.loadMetadata()).done(function(song) {
 						song.id < len / 2
@@ -749,17 +751,18 @@
 	};
 
 	// Song obj
-	$.Song = function(name, id) {
+	$.Song = function(name, id, songsPath) {
 		this.id = id;
 		this.name = name;
+		this.songsPath = songsPath || 'songs/';
 		this._init();
 	};
 
 	$.Song.prototype = {
 		_init: function() {
 			this.sources = {
-				mp3: 'songs/' + this.name + '.mp3',
-				ogg: 'songs/' + this.name + '.ogg'
+				mp3: this.songsPath + this.name + '.mp3',
+				ogg: this.songsPath + this.name + '.ogg'
 			};
 		},
 		getSource: function(type) {
@@ -788,7 +791,8 @@
 	};
 
 	// Sound obj
-	$.Sound = function() {
+	$.Sound = function(soundsPath) {
+		this.soundsPath = soundsPath || 'sounds/';
 		this._init();
 	};
 
@@ -797,7 +801,7 @@
 			this.$audio = $('<audio/>').attr('preload', 'auto');
 		},
 		getSource: function(type) {
-			return 'sounds/' + this.action + '.' + type;
+			return this.soundsPath + this.action + '.' + type;
 		},
 		play: function(action, loop) {
 			var _self = this;
