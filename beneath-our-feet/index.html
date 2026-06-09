@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Beneath Our Feet by the Winslow Family Band</title>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="description"
+			content="Beneath Our Feet by the Winslow Family Band"
+		/>
+		<meta
+			name="keywords"
+			content="winslowfamilyband, winslow family band, beneath our feet, best band you never heard of"
+		/>
+		<meta name="author" content="WFB" />
+		<link rel="shortcut icon" href="../favicon.ico" />
+		<link rel="stylesheet" type="text/css" href="../css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../css/knobKnob.css" />
+		<link
+			href="https://fonts.googleapis.com/css?family=Aldrich"
+			rel="stylesheet"
+			type="text/css"
+		/>
+		<script type="text/javascript" src="../js/modernizr.custom.69142.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<header>
+				<h1>Winslow Family Band - Beneath Our Feet (2014)</h1>
+			</header>
+
+			<div id="vc-container" class="vc-container">
+				<div class="vc-tape-wrapper">
+					<div class="vc-tape">
+						<div class="vc-tape-back">
+							<div class="vc-tape-wheel vc-tape-wheel-left"><div></div></div>
+							<div class="vc-tape-wheel vc-tape-wheel-right"><div></div></div>
+						</div>
+						<div class="vc-tape-front vc-tape-side-a">
+							<span>A</span>
+						</div>
+						<div class="vc-tape-front vc-tape-side-b">
+							<span>B</span>
+						</div>
+					</div>
+				</div>
+				<div class="vc-loader"></div>
+			</div>
+			<!-- //vc-container -->
+
+			<div class="attribution">
+				<img src="../images/tapecover.png" alt="Winslow Family Band - Beneath Our Feet cassette cover" />
+				<div class="track-listing">
+					<div class="track-side">
+						<h3>Side A</h3>
+						<ol>
+							<li><a href="#" data-song="gottagettoyou">Gotta Get to You</a></li>
+							<li><a href="#" data-song="beneathourfeet">Beneath Our Feet</a></li>
+							<li><a href="#" data-song="whatachangeinme">What a Change in Me</a></li>
+							<li><a href="#" data-song="backtocuba">Back to Cuba</a></li>
+							<li><a href="#" data-song="Heavy">Heavy</a></li>
+						</ol>
+					</div>
+					<div class="track-side">
+						<h3>Side B</h3>
+						<ol>
+							<li><a href="#" data-song="Artofyou">Art of You</a></li>
+							<li><a href="#" data-song="sAIL">sAIL</a></li>
+							<li><a href="#" data-song="lasombra">La Sombra</a></li>
+							<li><a href="#" data-song="HumanRace">Human Race</a></li>
+						</ol>
+					</div>
+				</div>
+			</div>
+			<div class="listen-links">
+				<h2>Listen &amp; Follow</h2>
+				<ul>
+					<li>
+						<a href="https://soundcloud.com/winslowfamilyband" target="_blank" rel="noopener">
+							SoundCloud
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div>
+				<h1>About the record</h1>
+			</div>
+		</div>
+
+		<!-- //container -->
+
+		<!-- KnobKnob by Martin Angelov : https://github.com/martinaglv/KnobKnob -->
+		<script src="../js/transform.js"></script>
+		<script src="../js/knobKnob.jquery.js"></script>
+
+		<script type="text/javascript" src="../js/jquery.cassette.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				$('#vc-container').cassette();
+
+				$(document).on('click', '.track-listing a', function(e) {
+					e.preventDefault();
+					var cassette = $.data($('#vc-container').get(0), 'cassette');
+					if (cassette) cassette._jumpToSong($(this).data('song'));
+				});
+			});
+		</script>
+	</body>
+</html>
