@@ -131,6 +131,83 @@ a:hover {
 	color: #666;
 }
 
+.track-listing {
+	display: flex;
+	justify-content: center;
+	gap: 40px;
+	margin-top: 16px;
+	text-align: left;
+}
+.track-side h3 {
+	font-family: 'Aldrich', sans-serif;
+	font-size: 11px;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	color: #999;
+	margin: 0 0 8px 0;
+	border-bottom: 1px solid rgba(255,255,255,0.15);
+	padding-bottom: 4px;
+}
+.track-side ol {
+	margin: 0;
+	padding: 0 0 0 18px;
+	list-style: decimal;
+}
+.track-side ol li {
+	margin-bottom: 4px;
+	font-size: 11px;
+	letter-spacing: 1px;
+}
+.track-side ol li a {
+	color: #bbb;
+	text-decoration: none;
+	text-transform: uppercase;
+	font-family: 'Aldrich', sans-serif;
+	transition: color 0.15s;
+}
+.track-side ol li a:hover {
+	color: #fff;
+}
+
+.listen-links {
+	width: 600px;
+	margin: 0 auto;
+	padding: 24px 10px 16px;
+	text-align: center;
+	border-top: 1px solid rgba(255,255,255,0.15);
+}
+.listen-links h2 {
+	font-family: 'Aldrich', sans-serif;
+	font-size: 11px;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	color: #999;
+	margin: 0 0 12px 0;
+}
+.listen-links ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	gap: 24px;
+	flex-wrap: wrap;
+}
+.listen-links ul li a {
+	font-family: 'Aldrich', sans-serif;
+	font-size: 11px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	color: #bbb;
+	text-decoration: none;
+	border-bottom: 1px solid rgba(255,255,255,0.2);
+	padding-bottom: 2px;
+	transition: color 0.15s;
+}
+.listen-links ul li a:hover {
+	color: #fff;
+}
+
 .support-note span {
 	color: #fff;
 	font-size: 16px;

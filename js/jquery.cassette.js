@@ -227,7 +227,7 @@
 
 			this.$audioEl.on('ended', function(event) {
 				_self.timeIterator += _self.audio.duration;
-				_self._play();
+				_self._playNext();
 			});
 		},
 		_setButtonActive: function($button) {
@@ -317,6 +317,89 @@
 		},
 		_changeVolume: function(ratio) {
 			this.audio.volume = ratio;
+		},
+		_jumpToSong: function(songName) {
+			var _self = this;
+			var targetSide = null;
+			var targetSongIdx = null;
+			var cumulativeTime = 0;
+
+			var playlist1 = this.side1.getPlaylist();
+			for (var i = 0; i < playlist1.length; i++) {
+				if (playlist1[i].name === songName) {
+					targetSide = 1;
+					targetSongIdx = i;
+					for (var j = 0; j < i; j++) cumulativeTime += playlist1[j].getDuration();
+					break;
+				}
+			}
+
+			if (targetSide === null) {
+				var playlist2 = this.side2.getPlaylist();
+				for (var i = 0; i < playlist2.length; i++) {
+					if (playlist2[i].name === songName) {
+						targetSide = 2;
+						targetSongIdx = i;
+						for (var j = 0; j < i; j++) cumulativeTime += playlist2[j].getDuration();
+						break;
+					}
+				}
+			}
+
+			if (targetSide === null) return;
+
+			this._stop(true);
+			this.lastaction = '';
+
+			if (this.currentSide !== targetSide) {
+				this.currentSide = targetSide;
+				if (targetSide === 2) {
+					this.$theTape.css({
+						'-webkit-transform': 'rotate3d(0, 1, 0, 180deg)',
+						'-moz-transform': 'rotate3d(0, 1, 0, 180deg)',
+						transform: 'rotate3d(0, 1, 0, 180deg)'
+					});
+					setTimeout(function() { _self.$tapeSideA.hide(); _self.$tapeSideB.show(); }, 200);
+				} else {
+					this.$theTape.css({
+						'-webkit-transform': 'rotate3d(0, 1, 0, 0deg)',
+						'-moz-transform': 'rotate3d(0, 1, 0, 0deg)',
+						transform: 'rotate3d(0, 1, 0, 0deg)'
+					});
+					setTimeout(function() { _self.$tapeSideB.hide(); _self.$tapeSideA.show(); }, 200);
+				}
+			}
+
+			this.cntTime = cumulativeTime;
+			this.timeIterator = cumulativeTime;
+			this._setSidesPosStatus('middle');
+			this._updateWheelValue(this._getWheelValues(cumulativeTime));
+			this._updateButtons('play');
+
+			var side = targetSide === 1 ? this.side1 : this.side2;
+			this._prepare(side.getSong(targetSongIdx));
+
+			this.$audioEl.one('canplay', function() {
+				_self.audio.currentTime = 0;
+				_self.audio.play();
+				_self.isMoving = true;
+				_self._setWheelAnimation('2s', 'play');
+			});
+		},
+		_playNext: function() {
+			var _self = this;
+			this._updateButtons('play');
+			var data = this._updateStatus();
+
+			if (data) {
+				this._prepare(this._getSide().current.getSong(data.songIdx));
+				this.$audioEl.one('canplay', function() {
+					_self.audio.currentTime = data.timeInSong;
+					_self.audio.play();
+					_self.isMoving = true;
+					_self._setWheelAnimation('2s', 'play');
+				});
+			}
 		},
 		_play: function() {
 			var _self = this;
@@ -730,15 +813,14 @@
 					_self.$audio.removeAttr('loop');
 				}
 
-				_self.$audio.on('canplay', function(event) {
-					// TODO: change timeout to ended event . ended event does not trigger for safari ?
+				_self.$audio.off('canplay').one('canplay', function(event) {
 					setTimeout(function() {
 						dfd.resolve();
 					}, 500);
-					$(this)
-						.get(0)
-						.play();
+					$(this).get(0).play();
 				});
+
+				_self.$audio.get(0).load();
 			});
 		}
 	};

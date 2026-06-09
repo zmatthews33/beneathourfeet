@@ -71,7 +71,38 @@
 			<!-- //vc-container -->
 
 			<div class="attribution">
-				<img src="images/tapecover.png" alt="" />
+				<img src="images/tapecover.png" alt="Winslow Family Band - Beneath Our Feet cassette cover" />
+				<div class="track-listing">
+					<div class="track-side">
+						<h3>Side A</h3>
+						<ol>
+							<li><a href="#" data-song="gottagettoyou">Gotta Get to You</a></li>
+							<li><a href="#" data-song="beneathourfeet">Beneath Our Feet</a></li>
+							<li><a href="#" data-song="whatachangeinme">What a Change in Me</a></li>
+							<li><a href="#" data-song="backtocuba">Back to Cuba</a></li>
+							<li><a href="#" data-song="Heavy">Heavy</a></li>
+						</ol>
+					</div>
+					<div class="track-side">
+						<h3>Side B</h3>
+						<ol>
+							<li><a href="#" data-song="Artofyou">Art of You</a></li>
+							<li><a href="#" data-song="sAIL">sAIL</a></li>
+							<li><a href="#" data-song="lasombra">La Sombra</a></li>
+							<li><a href="#" data-song="HumanRace">Human Race</a></li>
+						</ol>
+					</div>
+				</div>
+			</div>
+			<div class="listen-links">
+				<h2>Listen &amp; Follow</h2>
+				<ul>
+					<li>
+						<a href="https://soundcloud.com/winslowfamilyband" target="_blank" rel="noopener">
+							SoundCloud
+						</a>
+					</li>
+				</ul>
 			</div>
 			<div>
 				<h1>About the record</h1>
@@ -90,6 +121,12 @@
 		<script type="text/javascript">
 			$(function() {
 				$('#vc-container').cassette();
+
+				$(document).on('click', '.track-listing a', function(e) {
+					e.preventDefault();
+					var cassette = $.data($('#vc-container').get(0), 'cassette');
+					if (cassette) cassette._jumpToSong($(this).data('song'));
+				});
 			});
 		</script>
 	</body>
